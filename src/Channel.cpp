@@ -517,25 +517,24 @@ void Channel::BasicPublish(const std::string &exchange_name,
     // - basic.return then basic.ack - the message wasn't delievered, but was dealt with
     // - channel.close - probably tried to publish to a non-existant exchange, in any case error!
     // - connection.clsoe - something really bad happened
-    const boost::array<boost::uint32_t, 2> PUBLISH_ACK = { { AMQP_BASIC_ACK_METHOD, AMQP_BASIC_RETURN_METHOD } };
-    amqp_frame_t response;
-    boost::array<amqp_channel_t, 1> channels = {{ channel }};
-    m_impl->GetMethodOnChannel(channels, response, PUBLISH_ACK);
+//    amqp_frame_t response;
+//    boost::array<amqp_channel_t, 1> channels = {{ channel }};
+//    m_impl->GetMethodOnChannel(channels, response, PUBLISH_ACK);
 
-    if (AMQP_BASIC_RETURN_METHOD == response.payload.method.id)
-    {
-        MessageReturnedException message_returned =
-            m_impl->CreateMessageReturnedException(*(reinterpret_cast<amqp_basic_return_t *>(response.payload.method.decoded)), channel);
+//    if (AMQP_BASIC_RETURN_METHOD == response.payload.method.id)
+//    {
+//        MessageReturnedException message_returned =
+//            m_impl->CreateMessageReturnedException(*(reinterpret_cast<amqp_basic_return_t *>(response.payload.method.decoded)), channel);
 
-        const boost::array<boost::uint32_t, 1> BASIC_ACK = { { AMQP_BASIC_ACK_METHOD } };
-        m_impl->GetMethodOnChannel(channels, response, BASIC_ACK);
-        m_impl->ReturnChannel(channel);
-        m_impl->MaybeReleaseBuffersOnChannel(channel);
-        throw message_returned;
-    }
+//        const boost::array<boost::uint32_t, 1> BASIC_ACK = { { AMQP_BASIC_ACK_METHOD } };
+//        m_impl->GetMethodOnChannel(channels, response, BASIC_ACK);
+//        m_impl->ReturnChannel(channel);
+//        m_impl->MaybeReleaseBuffersOnChannel(channel);
+//        throw message_returned;
+//    }
 
-    m_impl->ReturnChannel(channel);
-    m_impl->MaybeReleaseBuffersOnChannel(channel);
+//    m_impl->ReturnChannel(channel);
+//    m_impl->MaybeReleaseBuffersOnChannel(channel);
 }
 
 bool Channel::BasicGet(Envelope::ptr_t &envelope, const std::string &queue, bool no_ack)
