@@ -533,8 +533,8 @@ void Channel::BasicPublish(const std::string &exchange_name,
 //        throw message_returned;
 //    }
 
-//    m_impl->ReturnChannel(channel);
-//    m_impl->MaybeReleaseBuffersOnChannel(channel);
+    m_impl->ReturnChannel(channel);
+    m_impl->MaybeReleaseBuffersOnChannel(channel);
 }
 
 bool Channel::BasicGet(Envelope::ptr_t &envelope, const std::string &queue, bool no_ack)
